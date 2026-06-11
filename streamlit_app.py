@@ -24,12 +24,37 @@ section[data-testid="stSidebar"] {
     background: #F0EAE0 !important;
     border-right: 1px solid rgba(195, 178, 155, 0.22) !important;
 }
-section[data-testid="stSidebar"] * {
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] input,
+section[data-testid="stSidebar"] span,
+section[data-testid="stSidebar"] .stCaption,
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3 {
     font-family: 'Noto Serif KR', serif !important;
 }
 section[data-testid="stSidebar"] .stCaption {
     color: #9A8C82 !important;
     font-size: 0.8rem !important;
+}
+
+/* Expander 레이블 겹침 방지 */
+[data-testid="stSidebar"] [data-testid="stExpander"] summary {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-family: 'Noto Serif KR', serif !important;
+}
+[data-testid="stSidebar"] [data-testid="stExpander"] summary p {
+    margin: 0 !important;
+    flex: 1 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+[data-testid="stSidebar"] [data-testid="stExpanderToggleIcon"] {
+    flex-shrink: 0 !important;
 }
 
 /* Chat messages */
