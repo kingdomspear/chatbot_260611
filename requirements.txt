@@ -1,5 +1,4 @@
 streamlit
-pandas
 openai
 folium
 streamlit-folium
