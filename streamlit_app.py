@@ -1,5 +1,6 @@
 import streamlit as st
 import json
+from streamlit_mic_recorder import speech_to_text
 
 st.set_page_config(
     page_title='여행지 추천 챗봇',
@@ -331,8 +332,56 @@ else:
             ).add_to(m)
             st_folium(m, width=700, height=420)
 
-    # Chat input
-    if prompt := st.chat_input('지역명을 입력하세요  (예: 제주도, 파리, 도쿄)'):
+    # Voice input
+    st.divider()
+    st.html("""
+    <p style="
+        font-family: 'Noto Serif KR', serif;
+        color: #A89880;
+        font-size: 0.82rem;
+        letter-spacing: 0.08em;
+        margin: 0 0 8px;
+        font-weight: 300;
+        text-align: center;
+    ">🎙️ &nbsp; 음성으로 입력하거나 아래에 직접 입력하세요</p>
+    """)
+
+    voice_input = speech_to_text(
+        language='ko-KR',
+        start_prompt='🎤  음성 입력 시작',
+        stop_prompt='⏹️  인식 완료',
+        just_once=True,
+        use_container_width=True,
+        key='voice_stt',
+    )
+
+    if voice_input:
+        st.html(f"""
+        <div style="
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 18px;
+            background: rgba(181, 196, 177, 0.15);
+            border-radius: 12px;
+            border: 1px solid rgba(181, 196, 177, 0.35);
+            margin: 8px 0 4px;
+        ">
+            <span style="font-size: 1rem;">🎙️</span>
+            <span style="
+                font-family: 'Noto Serif KR', serif;
+                color: #5A6655;
+                font-size: 0.9rem;
+                letter-spacing: 0.04em;
+                font-style: italic;
+            ">{voice_input}</span>
+        </div>
+        """)
+
+    # Text input
+    text_input = st.chat_input('지역명을 입력하세요  (예: 제주도, 파리, 도쿄)')
+
+    prompt = voice_input or text_input
+
+    if prompt:
         st.session_state.messages.append({'role': 'user', 'content': prompt})
 
         with st.chat_message('user'):
